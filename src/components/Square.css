@@ -1,0 +1,35 @@
+.square {
+    width: 100%;
+    border: 1px solid white;
+    box-sizing: border-box;
+    aspect-ratio: 1;
+    z-index: 10;
+}
+
+.bg-red {
+    background-color: red;
+}
+
+.bg-blue {
+    background-color: blue;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.bg-green {
+    background-color: green;
+}
+
+.bg-orange {
+    background-color: orange;
+}
+
+.bg-yellow {
+    background-color: yellow;
+}
+
+.bg-empty {
+    border: none;
+}
