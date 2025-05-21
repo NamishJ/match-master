@@ -1,16 +1,21 @@
 .grid-wrapper {
     position: relative;
     aspect-ratio: 1;
-    width: 90vmin;
+    width: 50vmin;
     max-width: 500px;
 }
 
+/* 
+Viewport Units
+vh
+vw
+vmin
+vmax
+*/
+
 .main-grid {
     display: grid;
-    position: relative;
-    /* equal width squares */
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    position: relative;    
     gap: 0.25rem;
     padding: 0.25rem;
     justify-content: center;

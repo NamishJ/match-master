@@ -8,14 +8,15 @@ interface GridProps {
     tiles: TileData[];
     numRows: number;
     numCols: number;
-    tileClickHandler: (pos: number) => void;
-    children: React.ReactNode;
+    tileClickHandler?: (pos: number) => void;
+    children?: React.ReactNode;
 }
 
 function TileGrid({ tiles, numRows, numCols, tileClickHandler, children }: GridProps): JSX.Element {
     // function names
 
     // Equal width squares aligned in a grid of size numRows x numCols
+
     let style = {
         gridTemplateRows: `repeat(${numRows}, 1fr)`,
         gridTemplateColumns: `repeat(${numCols}, 1fr)`,
@@ -29,7 +30,7 @@ function TileGrid({ tiles, numRows, numCols, tileClickHandler, children }: GridP
                 key={tile.id}
                 position={index}
                 color={tile.color} 
-                clickHandler={tileClickHandler} 
+                clickHandler={tileClickHandler || undefined} 
                 />
             ))}
         </div>

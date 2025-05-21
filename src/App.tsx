@@ -1,12 +1,14 @@
 import React from 'react'
 import './App.css'
-import GameGrid from './components/PlayerGrid'
+import OnePlayerGame from './components/OnePlayerGame'
 
 function App() {
   // function names
 
   return (
-    <GameGrid />
+    <div style={{display: 'flex'}}>
+      <OnePlayerGame />
+    </div>
   )
   
 }

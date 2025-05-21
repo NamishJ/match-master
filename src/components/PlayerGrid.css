@@ -18,15 +18,23 @@
     pointer-events: none;
 }
 
-@keyframes pulseGlow {
-    0% { box-shadow: 0px 0px 10px 10px rgba(255,255,255,0.2); }
-    50% { box-shadow: 0px 0px 10px 10px rgba(255,255,255,0.7); }
+/*
+Below are for animation
+keyframes are a class in CSS that allow for
+certain frames to look like the way we want
+based on the .gird-overlay we made
+CSS interpolates between keyframses.
+ */
+/* @keyframes pulseGlow {
+    0% { box-shadow: 0px 0px 10px 10px rgba(255, 255, 255, 0.2); }
+    50% { box-shadow: 0px 0px 10px 10px rgba(255,255,255,0.5); }
     100% { box-shadow: 0px 0px 10px 10px rgba(255,255,255,0.2); }
-}
+} */
 
 .glow-overlay {
     grid-row: 2 / span 3;
     grid-column: 2 / span 3;
-    animation: pulseGlow 2.5s ease-in-out infinite;
+    box-shadow: 0px 0px 10px 10px rgba(255,255,255,0.5);
+    /* animation: pulseGlow 2.5s ease-in-out infinite; */
     z-index: 0;
 }

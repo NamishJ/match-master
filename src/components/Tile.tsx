@@ -36,7 +36,7 @@ prop/attribute is optional and is a string.
 interface TileProps {
     position: number;
     color: TileColor;
-    clickHandler: (pos: number) => void;
+    clickHandler?: (pos: number) => void;
 }
 
 function Tile({ position, color, clickHandler }: TileProps): JSX.Element { 
@@ -47,7 +47,7 @@ function Tile({ position, color, clickHandler }: TileProps): JSX.Element {
         layout
         // Try 'circOut', 'easeInOut', 'anticipate'
         transition={{ duration: 0.1, ease: 'easeOut'}}
-        onClick={() => clickHandler(position)}
+        onClick={clickHandler ? () => clickHandler(position) : undefined}
         />
     )
 
