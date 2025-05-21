@@ -3,12 +3,15 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://namish7.github.io/match-master",
+  "homepage": "https://namishj.github.io/match-master",
   "scripts": {
     "dev": "vite --port 8080",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "npm run build && gh-pages -d dist"
+    
   },
   "dependencies": {
     "motion": "^12.12.1",
