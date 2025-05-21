@@ -1,31 +1,18 @@
 import React from "react";
-import Square from "./Square";
-import type { CubeColor } from "./Square";
-import './Grid.css'
+import { TILE_COLORS } from "./Tile";
+import type { TileData } from "./Tile";
 import { useState } from "react";
+import TileGrid from "./TileGrid";
+import './PlayerGrid.css'
 
-interface GamePiece {
-    id: number;
-    color: CubeColor;
-}
+function getGamePieces(): Array<TileData> {
+    let pieces: Array<TileData> = [];
 
-let colors: Array<CubeColor> = [
-    'red', 
-    'green', 
-    'blue', 
-    'white', 
-    'yellow', 
-    'orange'
-]
-
-function getGamePieces(): Array<GamePiece> {
-    let pieces: Array<GamePiece> = [];
-
-    for (let i = 0; i < colors.length; i++) {
+    for (let i = 0; i < TILE_COLORS.length; i++) {
         for (let x = 0; x < 4; x++) {
             let piece = {
                 id: i * 4 + x,
-                color: colors[i]
+                color: TILE_COLORS[i]
             }
             pieces.push(piece);
         }
@@ -40,7 +27,7 @@ function getGamePieces(): Array<GamePiece> {
     return pieces;
 }
 
-function shuffle(arr: Array<T>) {
+function shuffle<T>(arr: Array<T>) {
 
     for (let i = arr.length - 1; i > 0; i--) {
         let randIdx = Math.floor(Math.random() * i);
@@ -53,7 +40,7 @@ function shuffle(arr: Array<T>) {
     return arr;
 }
 
-function locateEmpty(arr: Array<GamePiece>) {
+function locateEmpty(arr: Array<TileData>) {
     for(let i = 0; i < arr.length; i++) {
         if(arr[i].color == 'empty') {
             return i;
@@ -77,15 +64,13 @@ function isAdjacentToEmpty(pos: number, emptyPos: number) {
     return (sameRow && adjCol) || (sameCol && adjRow);
 }
 
-function Grid() {
+function PlayerGrid() {
     // function names
 
     const [grid, setGrid] = useState(shuffle(getGamePieces()))
     const [emptyPos, setEmptyPos] = useState(locateEmpty(grid))
 
-    console.log(grid)
-
-    const squareClicked = (pos: number) => {
+    const tileClickHandler = (pos: number) => {
         // idx [0-24]
         if(isAdjacentToEmpty(pos, emptyPos)) {
             let newGrid = [...grid];
@@ -107,24 +92,19 @@ function Grid() {
     // that stay the same for each piece regardless of its location.
 
     return (
-      <div className='grid-wrapper'>
-        <div className="main-grid">
-            {grid.map((gamePiece: GamePiece, index: number) => (
-                <Square 
-                key={gamePiece.id}
-                position={index}
-                color={gamePiece.color} 
-                clickHandler={squareClicked} 
-                />
-            ))}
-        </div>
+      <TileGrid
+      tiles={grid}
+      numRows={5}
+      numCols={5}
+      tileClickHandler={tileClickHandler}
+      >
         <div className='overlay-grid'>
             <div className="glow-overlay"></div>
         </div>
-      </div>
+      </TileGrid>
     )
   
 }
   
-export default Grid;
+export default PlayerGrid;
   

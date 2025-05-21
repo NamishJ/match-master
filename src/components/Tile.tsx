@@ -1,7 +1,8 @@
 import React from "react";
 import { motion } from "motion/react";
 import type { JSX } from "react";
-import './Square.css'
+import './Tile.css'
+
 // function names
 
 // 1. interface makes new shape obj
@@ -10,7 +11,20 @@ import './Square.css'
 //    property and the component must get a -
 //    color string type
 
-export type CubeColor = 'red'|'yellow'|'orange'|'white'|'blue'|'green'|'empty'|undefined;
+export type TileColor = 'red'|'yellow'|'orange'|'white'|'blue'|'green'|'empty'|undefined;
+export const TILE_COLORS: Array<TileColor> = [
+    'red', 
+    'green', 
+    'blue', 
+    'white', 
+    'yellow', 
+    'orange'
+]
+
+export interface TileData {
+    id: number;
+    color: TileColor;
+}
 
 /*
 Props for the square (like attributes).
@@ -18,13 +32,14 @@ inMiddle checks to see if it is in 3x3 portion of the
 grid and has a question mark to say that this 
 prop/attribute is optional and is a string.
 */
-interface SquareProps {
+
+interface TileProps {
     position: number;
-    color: CubeColor;
+    color: TileColor;
     clickHandler: (pos: number) => void;
 }
 
-function Square({ position, color, clickHandler }: SquareProps): JSX.Element { 
+function Tile({ position, color, clickHandler }: TileProps): JSX.Element { 
 
     return (
         <motion.div 
@@ -38,4 +53,4 @@ function Square({ position, color, clickHandler }: SquareProps): JSX.Element {
 
 }
 
-export default Square;
+export default Tile;

@@ -1,14 +1,14 @@
 import React from 'react'
 import './App.css'
-import Grid from './components/Grid'
+import GameGrid from './components/PlayerGrid'
 
 function App() {
   // function names
 
   return (
-    <Grid />
+    <GameGrid />
   )
-
+  
 }
 
 export default App

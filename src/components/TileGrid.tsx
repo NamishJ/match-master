@@ -1,0 +1,43 @@
+import React from "react";
+import type { TileData } from "./Tile";
+import type { JSX } from "react";
+import Tile from "./Tile";
+import './TileGrid.css'
+
+interface GridProps {
+    tiles: TileData[];
+    numRows: number;
+    numCols: number;
+    tileClickHandler: (pos: number) => void;
+    children: React.ReactNode;
+}
+
+function TileGrid({ tiles, numRows, numCols, tileClickHandler, children }: GridProps): JSX.Element {
+    // function names
+
+    // Equal width squares aligned in a grid of size numRows x numCols
+    let style = {
+        gridTemplateRows: `repeat(${numRows}, 1fr)`,
+        gridTemplateColumns: `repeat(${numCols}, 1fr)`,
+    };
+
+    return (
+      <div className='grid-wrapper'>
+        <div className="main-grid" style={style}>
+            {tiles.map((tile: TileData, index: number) => (
+                <Tile 
+                key={tile.id}
+                position={index}
+                color={tile.color} 
+                clickHandler={tileClickHandler} 
+                />
+            ))}
+        </div>
+        {children}
+      </div>
+    )
+  
+}
+  
+export default TileGrid;
+  
