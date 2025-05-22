@@ -46,7 +46,7 @@ function Tile({ position, color, clickHandler }: TileProps): JSX.Element {
         className={`square ${color ? `bg-${color}` : ''}`}
         layout
         // Try 'circOut', 'easeInOut', 'anticipate'
-        transition={{ duration: 0.1, ease: 'easeOut'}}
+        transition={{ duration: 0.05, ease: 'easeOut'}}
         onClick={clickHandler ? () => clickHandler(position) : undefined}
         />
     )
