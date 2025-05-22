@@ -1,4 +1,3 @@
-import React from "react";
 import type { TileData } from "./Tile";
 import TileGrid from "./TileGrid";
 import './PlayerGrid.css'

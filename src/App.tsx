@@ -1,12 +1,11 @@
-import React from 'react'
-import './App.css'
 import OnePlayerGame from './components/OnePlayerGame'
+import './App.css'
 
 function App() {
   // function names
 
   return (
-    <div style={{display: 'flex'}}>
+    <div>
       <OnePlayerGame />
     </div>
   )

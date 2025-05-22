@@ -1,5 +1,7 @@
 import { TILE_COLORS, type TileData } from "../components/Tile";
 
+export type direction = 'up'|'down'|'left'|'right'|undefined;
+
 export function getGameTiles(includeEmpty: boolean = true): Array<TileData> {
     let pieces: Array<TileData> = [];
 
@@ -46,12 +48,26 @@ export function locateEmpty(arr: Array<TileData>) {
     return -1;
 }
 
-export function isAdjacentToEmpty(pos: number, emptyPos: number) {
+export function coordinatesFromFlatIndex(
+    pos: number,
+    numRows: number,
+    numCols: number
+): [number, number] {
+    let row = Math.floor(pos / numRows)
+    let col = pos % numCols
+    return [row, col];
+}
 
-    let posRow = pos % 5;
-    let posCol = Math.floor(pos / 5);
-    let emptyPosRow = emptyPos % 5;
-    let emptyPosCol = Math.floor(emptyPos / 5);
+export function isAdjacentToEmpty(
+    pos: number, 
+    emptyPos: number,
+    numRows: number,
+    numCols: number
+) {
+
+    // "Tuple unpacking" syntax. 
+    let [posRow, posCol] = coordinatesFromFlatIndex(pos, numRows, numCols);
+    let [emptyPosRow, emptyPosCol] = coordinatesFromFlatIndex(emptyPos, numRows, numCols);
 
     let sameRow = posRow == emptyPosRow;
     let sameCol = posCol == emptyPosCol;
@@ -59,6 +75,43 @@ export function isAdjacentToEmpty(pos: number, emptyPos: number) {
     let adjRow = posRow == emptyPosRow - 1 || posRow == emptyPosRow + 1
 
     return (sameRow && adjCol) || (sameCol && adjRow);
+}
+
+export function getAdjacentFlatIndex(
+    pos: number, 
+    dir: direction,
+    numRows: number,
+    numCols: number) {
+    /* 
+    Returns index of cell adjacent to {pos} in {direction}.
+    Returns -1 if out of bounds.
+    */
+    let [r, c] = coordinatesFromFlatIndex(pos, numRows, numCols);
+
+    switch(dir) {
+        case 'left': 
+            c--
+            break;
+        case 'right':
+            c++
+            break;
+        case 'up':
+            r--
+            break;
+        case 'down':
+            r++
+            break;
+        default:
+            return -1
+    }
+
+    if ((r < 0) || (r > numRows) || (c < 0) || (c > numCols)) {
+        return -1;
+    }
+
+    let flatIndex = r * numCols + c;
+   
+    return flatIndex;
 }
 
 export function rollDie(start: number, numSides: number): number {
