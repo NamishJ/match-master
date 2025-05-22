@@ -26,7 +26,7 @@
 
 .target-grid-container {
     flex: 1;
-    padding: 5rem;
+    padding: 1rem;
     display: grid;
     place-items: center;
 }
@@ -36,7 +36,22 @@
     padding: 2rem;
     display: grid;
     place-items: center;
+    
     /* Allow react swipeable to handle touch */
-
     touch-action: none;
+}
+
+.game-target-grid {
+    max-width: min(30vw, 60%) !important;
+}
+
+.timer {
+    display: flex; /* makes timer a flex container for more pwrful layout of child elems */
+    flex-direction: column; /* For vertical stacking, row is default */
+    align-items: center; /* Horizontal centering based on flex container */
+    /* transform: translateX(300px);  Shifts the timer container ri the right and doesnt affect the elems nearby */
+}
+
+.timerHeader {
+    margin-left: 300px;
 }

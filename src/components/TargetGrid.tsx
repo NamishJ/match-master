@@ -1,7 +1,6 @@
 import type { TileData } from './Tile';
 import TileGrid from './TileGrid';
-
-import './TargetGrid.css';
+// import styles from './TargetGrid.module.css';
 
 // Frame Scrambler
 // There are 9 6-sided die
@@ -9,12 +8,14 @@ import './TargetGrid.css';
 
 interface TargetGridProps {
     tiles: TileData[];
+    className?: string
 }
 
-function TargetGrid({ tiles }: TargetGridProps) {
+function TargetGrid({ tiles, className }: TargetGridProps) {
 
     return (
         <TileGrid
+        className={className}
         tiles={tiles}
         numRows={3}
         numCols={3}

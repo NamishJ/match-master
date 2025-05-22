@@ -1,13 +1,14 @@
 import type { TileData } from "./Tile";
 import TileGrid from "./TileGrid";
-import './PlayerGrid.css'
+import styles from './PlayerGrid.module.css'
 
 interface PlayerGridProps {
     tiles: TileData[];
     tileClickHandler: (pos: number) => void;
+    className?: string
 }
 
-function PlayerGrid({ tiles, tileClickHandler }: PlayerGridProps) {
+function PlayerGrid({ tiles, tileClickHandler, className }: PlayerGridProps) {
     // function names
 
     // Motion animates based on react key. We cannot update key 
@@ -21,9 +22,10 @@ function PlayerGrid({ tiles, tileClickHandler }: PlayerGridProps) {
       numRows={5}
       numCols={5}
       tileClickHandler={tileClickHandler}
+      className={className}
       >
-        <div className='overlay-grid'>
-            <div className="glow-overlay"></div>
+        <div className={styles['overlay-grid']}>
+            <div className={styles['glow-overlay']}></div>
         </div>
       </TileGrid>
     )

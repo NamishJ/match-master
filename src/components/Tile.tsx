@@ -1,7 +1,6 @@
-import React from "react";
 import { motion } from "motion/react";
 import type { JSX } from "react";
-import './Tile.css'
+import styles from './Tile.module.css'
 
 // function names
 
@@ -41,12 +40,19 @@ interface TileProps {
 
 function Tile({ position, color, clickHandler }: TileProps): JSX.Element { 
 
+    const tileStyle = color === 'empty' ? (
+        {border: 'none'}
+    ) : (
+        {backgroundColor: color}
+    )
+
     return (
         <motion.div 
-        className={`square ${color ? `bg-${color}` : ''}`}
+        className={`${styles['tile']}`}
+        style={tileStyle}
         layout
         // Try 'circOut', 'easeInOut', 'anticipate'
-        transition={{ duration: 0.05, ease: 'easeOut'}}
+        transition={{ duration: 0.1, ease: 'easeOut'}}
         onClick={clickHandler ? () => clickHandler(position) : undefined}
         />
     )

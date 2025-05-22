@@ -23,7 +23,7 @@ import {
 import PlayerGrid from './PlayerGrid';
 import TargetGrid from './TargetGrid';
 import { useSwipeable } from 'react-swipeable';
-import './OnePlayerGame.css'
+import styles from './OnePlayerGame.module.css'
 
 // Replace magic numbers (5) with these constants
 let NUM_ROWS = 5;
@@ -36,6 +36,16 @@ const OnePlayerGame: React.FC = () => {
     const [targetTiles, setTargetTiles] = useState(generateTargetGrid())
     const [gameWon, setGameWon] = useState(false)
     const [moveCount, setMoveCount] = useState(0)
+    const [timeElapsed, setTimeElapsed] = useState(0); // timer is in seconds
+    const [time, setTime] = useState(0); // idk if this needed, but here
+    const [isRunning, setIsRunning] = useState(false); // to know if timer active, for resets and pauses
+
+    const startTimer = () => setIsRunning(true);
+    const stopTimer = () => setIsRunning(false);
+    const resetTimer = () => {
+        setIsRunning(false);
+        setTime(0);
+    }
 
     const checkWin = () => {
         let inner = getInnerGrid(playerTiles);
@@ -50,6 +60,31 @@ const OnePlayerGame: React.FC = () => {
     useEffect(() => {
         checkWin();
     }, [playerTiles])
+
+    // increment every second
+    useEffect(() => {
+        let interval: number | undefined;
+
+        if (isRunning) {
+            interval = window.setInterval(() => {
+                setTime(prev => prev + 1);
+            }, 1000);
+        }
+
+        return () => clearInterval(interval);
+    }, [isRunning]);
+
+    /*
+    // increment every 1 second
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTimeElapsed(prev => prev + 1);
+        }, 1000);
+
+        // clear handler when game done, run once when game starts
+        return () => clearInterval(interval);
+        }, []);
+    */
 
     // Swipe/KB Handler Helper
     const fillEmptyTileFromDirection = (dir: direction) => {
@@ -140,11 +175,21 @@ const OnePlayerGame: React.FC = () => {
         }
     }
 
+    const mins = Math.floor(time / 60).toString().padStart(2, '0');
+    const seconds = (time % 60).toString().padStart(2, '0');
+    const formattedTime = `${mins}:${seconds}`;
+
+    // padstart used later works on strings and has a min
+    // length by padding left side with 2nd param.
+    // So '5'.padStart(2, '0') does '05', 5 is length 1 so 0 added as padding
     return (
-        <div>
-            <div className='game-wrapper'>
-                <div className='target-grid-container'>
-                    <TargetGrid tiles={targetTiles} /> 
+        <>
+            <div className={styles['game-wrapper']}>
+                <div className={styles['target-grid-container']}>
+                    <TargetGrid 
+                    tiles={targetTiles}
+                    className={styles['game-target-grid']}
+                    /> 
                     {
                         gameWon ? (
                             <div>we did it boys</div>
@@ -152,15 +197,23 @@ const OnePlayerGame: React.FC = () => {
                             <></>
                         )
                     }
+                    <div className="timer">
+                        <div className='TimerHeader'>
+                            <h2>{formattedTime}</h2>
+                        </div>
+                        <button onClick = {startTimer}>Start</button>
+                        <button onClick = {stopTimer}>Stop</button>
+                        <button onClick = {resetTimer}>Reset</button>
+                    </div>
                 </div>
-                <div  {...swipeHandlers} className='player-grid-container'>
+                <div  {...swipeHandlers} className={styles['player-grid-container']}>
                     <PlayerGrid 
                     tiles={playerTiles} 
                     tileClickHandler={tileClickHandler} />
                     <h1>Moves: {moveCount}</h1> 
                 </div>
             </div>           
-        </div>
+        </>
     );
 };
 
