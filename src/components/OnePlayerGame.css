@@ -1,8 +1,6 @@
 .game-wrapper {
     width: 100vw;
     height: 90vh;
-    /* Allow react swipeable to handle touch */
-    touch-action: none;
     display: flex;
     flex-direction: row;
 
@@ -38,4 +36,7 @@
     padding: 2rem;
     display: grid;
     place-items: center;
+    /* Allow react swipeable to handle touch */
+
+    touch-action: none;
 }
