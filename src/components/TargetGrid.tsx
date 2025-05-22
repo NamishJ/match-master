@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { TILE_COLORS, type TileData } from './Tile';
+import type { TileData } from './Tile';
 import TileGrid from './TileGrid';
 
 import './TargetGrid.css';
-import { getGameTiles, shuffle } from '../assets/utils';
 
 // Frame Scrambler
 // There are 9 6-sided die

@@ -22,6 +22,8 @@ import {
 } from '../assets/utils';
 import PlayerGrid from './PlayerGrid';
 import TargetGrid from './TargetGrid';
+import { useSwipeable } from 'react-swipeable';
+import './OnePlayerGame.css'
 
 // Replace magic numbers (5) with these constants
 let NUM_ROWS = 5;
@@ -49,6 +51,12 @@ const OnePlayerGame: React.FC = () => {
         checkWin();
     }, [playerTiles])
 
+    // Swipe/KB Handler Helper
+    const fillEmptyTileFromDirection = (dir: direction) => {
+        swapWithEmpty(getAdjacentFlatIndex(emptyPos, dir, NUM_ROWS, NUM_COLS));
+    }
+
+    // Keyboard Event Handlers
     useEffect(() => {
 
         // Handler
@@ -80,7 +88,7 @@ const OnePlayerGame: React.FC = () => {
             if(dir) {
                 // TO prevent scroll
                 event.preventDefault();
-                swapWithEmpty(getAdjacentFlatIndex(emptyPos, dir, NUM_ROWS, NUM_COLS))
+                fillEmptyTileFromDirection(dir);
             }
         };
         
@@ -92,6 +100,16 @@ const OnePlayerGame: React.FC = () => {
             window.removeEventListener('keydown', handler); // Clean up on unmount
         };
     })
+
+    // Swipe Event Handlers (Added directly to game wrapper div)
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: () => fillEmptyTileFromDirection('right'),
+        onSwipedRight: () => fillEmptyTileFromDirection('left'),
+        onSwipedUp: () => fillEmptyTileFromDirection('down'),
+        onSwipedDown: () => fillEmptyTileFromDirection('up'),
+        preventScrollOnSwipe: true,
+        trackTouch: true
+      });
 
     const swapWithEmpty = (pos: number) => {
 
@@ -123,7 +141,7 @@ const OnePlayerGame: React.FC = () => {
     }
 
     return (
-        <>
+        <div {...swipeHandlers} className='game-wrapper'>
             <PlayerGrid 
             tiles={playerTiles} 
             tileClickHandler={tileClickHandler} />
@@ -138,7 +156,7 @@ const OnePlayerGame: React.FC = () => {
             }
             <div>Moves: {moveCount}</div>
             
-        </>
+        </div>
     );
 };
 

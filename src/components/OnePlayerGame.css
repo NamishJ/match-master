@@ -1,0 +1,6 @@
+.game-wrapper {
+    width: 100vw;
+    height: 100vh;
+    /* Allow react swipeable to handle touch */
+    touch-action: none;
+}
