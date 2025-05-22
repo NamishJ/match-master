@@ -105,11 +105,11 @@ export function getAdjacentFlatIndex(
             return -1
     }
 
-    if ((r < 0) || (r > numRows) || (c < 0) || (c > numCols)) {
+    if ((r < 0) || (r >= numRows) || (c < 0) || (c >= numCols)) {
         return -1;
     }
 
-    let flatIndex = r * numCols + c;
+    let flatIndex =  r * numCols + c;
    
     return flatIndex;
 }
