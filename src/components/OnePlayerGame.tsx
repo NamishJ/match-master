@@ -142,7 +142,7 @@ const OnePlayerGame: React.FC = () => {
 
     return (
         <div>
-            <div {...swipeHandlers} className='game-wrapper'>
+            <div className='game-wrapper'>
                 <div className='target-grid-container'>
                     <TargetGrid tiles={targetTiles} /> 
                     {
@@ -153,7 +153,7 @@ const OnePlayerGame: React.FC = () => {
                         )
                     }
                 </div>
-                <div className='player-grid-container'>
+                <div  {...swipeHandlers} className='player-grid-container'>
                     <PlayerGrid 
                     tiles={playerTiles} 
                     tileClickHandler={tileClickHandler} />
