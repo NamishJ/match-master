@@ -6,6 +6,7 @@ function App() {
 
   return (
     <div>
+      <h1 className='navbar'>Match Master</h1>
       <OnePlayerGame />
     </div>
   )

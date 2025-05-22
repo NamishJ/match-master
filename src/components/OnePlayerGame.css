@@ -1,6 +1,26 @@
 .game-wrapper {
     width: 100vw;
-    height: 100vh;
+    height: 90vh;
     /* Allow react swipeable to handle touch */
     touch-action: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.target-grid-container {
+    flex: 1;
+    padding: 1rem;
+
+    display: grid;
+    place-items: center;
+    height: 100%;
+}
+
+.player-grid-container {
+    flex: 2;
+    padding: 1rem;
+
+    display: grid;
+    place-items: center;
+    height: 100%;
 }

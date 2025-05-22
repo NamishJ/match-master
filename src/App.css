@@ -2,3 +2,13 @@
   display: flex;
   justify-content: flex-start;
 }
+
+.navbar {
+  background-color: #333333;
+  color: white;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}

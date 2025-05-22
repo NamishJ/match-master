@@ -1,8 +1,8 @@
 .grid-wrapper {
     position: relative;
     aspect-ratio: 1;
-    width: 50vmin;
-    max-width: 500px;
+    width: 100%;
+    max-width: 90vmin;
 }
 
 /* 
