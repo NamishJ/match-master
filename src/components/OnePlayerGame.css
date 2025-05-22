@@ -5,22 +5,37 @@
     touch-action: none;
     display: flex;
     flex-direction: row;
+
+    margin: 0 auto; /* center horizontally */
+    padding: 0 0;
+    gap: 0vw; /* Controls spacing between the two grids */
+}
+
+@media (max-width: 768px) {
+    /* Styles for mobile */
+    .game-wrapper {
+      flex-direction: column;
+    }
+
+    .target-grid-container,
+    .player-grid-container {
+    }
+
+    .player-grid-container {
+        order: 2;
+    }
 }
 
 .target-grid-container {
     flex: 1;
-    padding: 1rem;
-
+    padding: 5rem;
     display: grid;
     place-items: center;
-    height: 100%;
 }
 
 .player-grid-container {
     flex: 2;
-    padding: 1rem;
-
+    padding: 2rem;
     display: grid;
     place-items: center;
-    height: 100%;
 }

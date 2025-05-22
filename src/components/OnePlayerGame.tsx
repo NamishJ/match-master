@@ -145,12 +145,6 @@ const OnePlayerGame: React.FC = () => {
             <div {...swipeHandlers} className='game-wrapper'>
                 <div className='target-grid-container'>
                     <TargetGrid tiles={targetTiles} /> 
-                    <h1>Moves: {moveCount}</h1> 
-                </div>
-                <div className='player-grid-container'>
-                    <PlayerGrid 
-                    tiles={playerTiles} 
-                    tileClickHandler={tileClickHandler} />
                     {
                         gameWon ? (
                             <div>we did it boys</div>
@@ -158,6 +152,12 @@ const OnePlayerGame: React.FC = () => {
                             <></>
                         )
                     }
+                </div>
+                <div className='player-grid-container'>
+                    <PlayerGrid 
+                    tiles={playerTiles} 
+                    tileClickHandler={tileClickHandler} />
+                    <h1>Moves: {moveCount}</h1> 
                 </div>
             </div>           
         </div>
