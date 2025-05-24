@@ -7,9 +7,9 @@ function OnePlayerGamePage() {
 
   return (
     <div>
-        <h1 className={styles['navbar']}>
-            <RubiksText text='MATCH MASTER' />
-        </h1>
+        <span className={styles['navbar']}>
+            <RubiksText className={styles['title-container']} text='MATCH MASTER' />
+        </span>
         <OnePlayerGame />
     </div>
   )

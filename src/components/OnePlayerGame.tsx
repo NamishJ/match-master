@@ -9,6 +9,7 @@ i have to move the data over so i can use it.
 */
 
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { 
     generateTargetGrid, 
     shuffle, 
@@ -26,6 +27,7 @@ import Timer from './Timer';
 import { useSwipeable } from 'react-swipeable';
 import styles from './OnePlayerGame.module.css'
 
+
 // Replace magic numbers (5) with these constants
 let NUM_ROWS = 5;
 let NUM_COLS = 5;
@@ -33,6 +35,8 @@ let NUM_COLS = 5;
 
 
 const OnePlayerGame: React.FC = () => {
+
+    const navigate = useNavigate();
 
     const [playerTiles, setPlayerTiles] = useState(shuffle(getGameTiles()))
     const [emptyPos, setEmptyPos] = useState(locateEmpty(playerTiles))
@@ -182,13 +186,20 @@ const OnePlayerGame: React.FC = () => {
         <>
             <div className={styles['game-wrapper']}>
                 <div className={styles['target-grid-container']}>
+                    <div className={styles['button-container']}>
+                        <button onClick={() => navigate('/')}>Home</button>
+                        <button onClick = {() => navigate('/leaderboard')}>Leaderboard</button>
+                        <button onClick = {resetGame}>Reset</button>
+                    </div>
                     <TargetGrid 
                     tiles={targetTiles}
                     className={styles['game-target-grid']}
                     /> 
                     {
                         gameWon ? (
-                            <div>we did it boys</div>
+                            <div className={styles['win-container']}>
+                                we did it boys
+                            </div>
                         ) : (
                             <></>
                         )
@@ -200,13 +211,14 @@ const OnePlayerGame: React.FC = () => {
                     tileClickHandler={tileClickHandler}
                     className={styles['game-player-grid']}
                     />
-                    <h1>Moves: {moveCount}</h1> 
-                    <Timer 
-                        onReset={resetGame}
-                        isRunning={isTimerRunning}
-                        time={time}
-                        setTime={setTime}>
-                    </Timer>
+                    <div className={styles['hud']}>
+                        <Timer 
+                            isRunning={isTimerRunning}
+                            time={time}
+                            setTime={setTime}>
+                        </Timer>
+                        <p>Moves: {moveCount}</p> 
+                    </div>
                 </div>
             </div>           
         </>

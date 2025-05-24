@@ -40,7 +40,6 @@
     gap: 1rem;
 }
 
-
 @keyframes fadeInUp {
     0% {
       transform: translateY(100%);

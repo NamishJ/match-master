@@ -5,5 +5,30 @@
     background-color: black;
     width: 100%;
     flex-direction: column;
-    height: 100px;
+    height: 10vh;
+}
+
+@keyframes breathe-up-down {
+    0% {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(5%);
+      opacity: 1;
+    }
+    100% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+.title-container {
+    -webkit-text-stroke: 1px white;
+    font-size: 1.5rem;
+    font-family: 'Press Start 2P', monospace;
+    text-shadow: 3px 2px rgba(255, 255, 255, 0.5);
+    text-align: center;
+    animation: 
+        breathe-up-down 2s ease-in-out infinite 1s; /* infinite after 1s delay */
 }

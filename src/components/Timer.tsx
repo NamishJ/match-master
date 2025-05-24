@@ -1,15 +1,18 @@
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import React, { 
+    useEffect, 
+    type Dispatch, 
+    type SetStateAction } 
+from 'react';
 import styles from './Timer.module.css'
 import { useNavigate } from 'react-router-dom';
 
 type TimerProps = {
-    onReset: () => void;
     isRunning: boolean;
     time: number;
     setTime: Dispatch<SetStateAction<number>>;
 }
 
-const Timer: React.FC<TimerProps> = ( {onReset, isRunning, time, setTime} ) => {
+const Timer: React.FC<TimerProps> = ( { isRunning, time, setTime} ) => {
     
     const navigate = useNavigate();
 
@@ -38,12 +41,6 @@ const Timer: React.FC<TimerProps> = ( {onReset, isRunning, time, setTime} ) => {
             <div className={styles['timer']}>
                 <div className={styles['timer-header']}>
                     <h2>{formattedTime}</h2>
-                </div>
-                <br/>
-                <div className={styles['button-container']}>
-                    <button onClick={() => navigate('/')}>Return to Homepage</button>
-                    <button onClick = {() => navigate('/leaderboard')}>Leaderboard</button>
-                    <button onClick = {onReset}>Reset Game</button>
                 </div>
             </div>
         </>
