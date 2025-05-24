@@ -1,0 +1,15 @@
+.timer {
+    display: flex; /* makes timer a flex container for more pwrful layout of child elems */
+    flex-direction: column; /* For vertical stacking, row is default */
+    align-items: center; /* Horizontal centering based on flex container */
+}
+
+.timer-header {
+    /* margin-left: 300px; */
+    color: aliceblue;
+}
+
+.button-container {
+    display: flex;
+    gap: 1rem;
+}

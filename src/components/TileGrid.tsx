@@ -30,6 +30,8 @@ function TileGrid({
         gridTemplateColumns: `repeat(${numCols}, 1fr)`,
     };
 
+    'big-boi-gg'
+
     return (
       <div className={`${styles['grid-wrapper']} ${className || ''}`}>
         <div className={styles['main-grid']} style={style}>

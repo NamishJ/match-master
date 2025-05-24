@@ -1,4 +1,4 @@
-import { TILE_COLORS, type TileData } from "../components/Tile";
+import { TILE_COLORS, type TileColor, type TileData } from "../components/Tile";
 
 export type direction = 'up'|'down'|'left'|'right'|undefined;
 
@@ -134,4 +134,9 @@ export function arraysEqual<T>(a: T[], b: T[]): boolean {
         return a.every((value, index) => value === b[index]);
     }
     return false;
+}
+
+export function getRandColor(): TileColor {
+    let randColor = Math.floor(Math.random() * TILE_COLORS.length);
+    return TILE_COLORS[randColor];
 }

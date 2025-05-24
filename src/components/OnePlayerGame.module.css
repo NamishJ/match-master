@@ -3,6 +3,7 @@
     height: 90vh;
     display: flex;
     flex-direction: row;
+    background-color: black;
 
     margin: 0 auto; /* center horizontally */
     padding: 0 0;
@@ -36,6 +37,8 @@
     padding: 2rem;
     display: grid;
     place-items: center;
+    color: aliceblue;
+    background-color: black;
     
     /* Allow react swipeable to handle touch */
     touch-action: none;
@@ -45,13 +48,8 @@
     max-width: min(30vw, 60%) !important;
 }
 
-.timer {
-    display: flex; /* makes timer a flex container for more pwrful layout of child elems */
-    flex-direction: column; /* For vertical stacking, row is default */
-    align-items: center; /* Horizontal centering based on flex container */
-    /* transform: translateX(300px);  Shifts the timer container ri the right and doesnt affect the elems nearby */
-}
-
-.timerHeader {
-    margin-left: 300px;
+.game-player-grid {
+    border-style: solid;
+    border-color: white;
+    border-width: 3px;
 }

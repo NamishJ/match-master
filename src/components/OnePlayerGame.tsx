@@ -22,12 +22,15 @@ import {
 } from '../assets/utils';
 import PlayerGrid from './PlayerGrid';
 import TargetGrid from './TargetGrid';
+import Timer from './Timer';
 import { useSwipeable } from 'react-swipeable';
 import styles from './OnePlayerGame.module.css'
 
 // Replace magic numbers (5) with these constants
 let NUM_ROWS = 5;
 let NUM_COLS = 5;
+
+
 
 const OnePlayerGame: React.FC = () => {
 
@@ -36,15 +39,22 @@ const OnePlayerGame: React.FC = () => {
     const [targetTiles, setTargetTiles] = useState(generateTargetGrid())
     const [gameWon, setGameWon] = useState(false)
     const [moveCount, setMoveCount] = useState(0)
-    const [timeElapsed, setTimeElapsed] = useState(0); // timer is in seconds
-    const [time, setTime] = useState(0); // idk if this needed, but here
-    const [isRunning, setIsRunning] = useState(false); // to know if timer active, for resets and pauses
+    const [isTimerRunning, setIsTimerRunning] = useState(false);
+    const [time, setTime] = useState(0);
+    const [hasGameStarted, setHasGameStarted] = useState(false);
+    
 
-    const startTimer = () => setIsRunning(true);
-    const stopTimer = () => setIsRunning(false);
-    const resetTimer = () => {
-        setIsRunning(false);
+    const resetGame = () => {
+        const newTiles = shuffle(getGameTiles());
+    
+        setPlayerTiles(newTiles);
+        setEmptyPos(locateEmpty(newTiles));
+        setTargetTiles(generateTargetGrid());
+        setGameWon(false);
+        setMoveCount(0);
         setTime(0);
+        setIsTimerRunning(false);
+        setHasGameStarted(false);
     }
 
     const checkWin = () => {
@@ -54,40 +64,20 @@ const OnePlayerGame: React.FC = () => {
         if (arraysEqual(innerColors, targetColors)) {
             console.log("You Won");
             setGameWon(true);
+            setIsTimerRunning(false);
         }
+        
     }
 
     useEffect(() => {
         checkWin();
     }, [playerTiles])
 
-    // increment every second
-    useEffect(() => {
-        let interval: number | undefined;
-
-        if (isRunning) {
-            interval = window.setInterval(() => {
-                setTime(prev => prev + 1);
-            }, 1000);
-        }
-
-        return () => clearInterval(interval);
-    }, [isRunning]);
-
-    /*
-    // increment every 1 second
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTimeElapsed(prev => prev + 1);
-        }, 1000);
-
-        // clear handler when game done, run once when game starts
-        return () => clearInterval(interval);
-        }, []);
-    */
-
     // Swipe/KB Handler Helper
     const fillEmptyTileFromDirection = (dir: direction) => {
+        if (gameWon) {
+            return;
+        }
         swapWithEmpty(getAdjacentFlatIndex(emptyPos, dir, NUM_ROWS, NUM_COLS));
     }
 
@@ -104,7 +94,7 @@ const OnePlayerGame: React.FC = () => {
             // event.key contains string of pressed key
             switch (event.key) {
                 case "ArrowLeft":
-                    dir = 'right'
+                    dir = 'right'              
                     break;
                 case "ArrowRight":
                     dir = 'left'
@@ -147,6 +137,10 @@ const OnePlayerGame: React.FC = () => {
       });
 
     const swapWithEmpty = (pos: number) => {
+        // might be redundant but for extra net so that game does not cont after gameWon true
+        if (gameWon) {
+            return;
+        }
 
         // getAdjacentFlatIndex returns -1 when there the adjacent cell in
         // the specified direction is out of bounds. We still want to use this
@@ -166,22 +160,24 @@ const OnePlayerGame: React.FC = () => {
 
             // update amount of moves
             setMoveCount(moveCount + 1);
+
+            // start Timer maybe (first move dependency)
+            if (!hasGameStarted) {
+                setHasGameStarted(true);
+                setIsTimerRunning(true);
+            }
         }
     }
 
     const tileClickHandler = (pos: number) => {
+        if (gameWon) {
+            return;
+        } 
         if(isAdjacentToEmpty(pos, emptyPos, NUM_ROWS, NUM_COLS)) {
             swapWithEmpty(pos);
         }
     }
 
-    const mins = Math.floor(time / 60).toString().padStart(2, '0');
-    const seconds = (time % 60).toString().padStart(2, '0');
-    const formattedTime = `${mins}:${seconds}`;
-
-    // padstart used later works on strings and has a min
-    // length by padding left side with 2nd param.
-    // So '5'.padStart(2, '0') does '05', 5 is length 1 so 0 added as padding
     return (
         <>
             <div className={styles['game-wrapper']}>
@@ -197,20 +193,20 @@ const OnePlayerGame: React.FC = () => {
                             <></>
                         )
                     }
-                    <div className="timer">
-                        <div className='TimerHeader'>
-                            <h2>{formattedTime}</h2>
-                        </div>
-                        <button onClick = {startTimer}>Start</button>
-                        <button onClick = {stopTimer}>Stop</button>
-                        <button onClick = {resetTimer}>Reset</button>
-                    </div>
                 </div>
                 <div  {...swipeHandlers} className={styles['player-grid-container']}>
                     <PlayerGrid 
                     tiles={playerTiles} 
-                    tileClickHandler={tileClickHandler} />
+                    tileClickHandler={tileClickHandler}
+                    className={styles['game-player-grid']}
+                    />
                     <h1>Moves: {moveCount}</h1> 
+                    <Timer 
+                        onReset={resetGame}
+                        isRunning={isTimerRunning}
+                        time={time}
+                        setTime={setTime}>
+                    </Timer>
                 </div>
             </div>           
         </>
