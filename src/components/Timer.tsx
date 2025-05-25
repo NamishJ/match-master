@@ -40,7 +40,7 @@ const Timer: React.FC<TimerProps> = ( { isRunning, time, setTime} ) => {
         <>
             <div className={styles['timer']}>
                 <div className={styles['timer-header']}>
-                    <h2>{formattedTime}</h2>
+                    <div>{formattedTime}</div>
                 </div>
             </div>
         </>

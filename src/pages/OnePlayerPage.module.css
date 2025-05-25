@@ -1,11 +1,15 @@
-.navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.page {
+    height: 100%;
     background-color: black;
-    width: 100%;
-    flex-direction: column;
+}
+
+.navbar {
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 10vh;
+
 }
 
 @keyframes breathe-up-down {
@@ -24,11 +28,17 @@
 }
 
 .title-container {
+    width: 100%;
     -webkit-text-stroke: 1px white;
+    /* Adding font size pushes game-wrapper beyound page height */
     font-size: 1.5rem;
-    font-family: 'Press Start 2P', monospace;
     text-shadow: 3px 2px rgba(255, 255, 255, 0.5);
     text-align: center;
+    /* line-height: 1; */
     animation: 
         breathe-up-down 2s ease-in-out infinite 1s; /* infinite after 1s delay */
+}
+
+.game {
+    height: 90vh;
 }

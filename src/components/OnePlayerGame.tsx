@@ -9,7 +9,7 @@ i have to move the data over so i can use it.
 */
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 import { 
     generateTargetGrid, 
     shuffle, 
@@ -19,7 +19,7 @@ import {
     getInnerGrid,
     arraysEqual,
     getAdjacentFlatIndex,
-    type direction
+    type direction,
 } from '../assets/utils';
 import PlayerGrid from './PlayerGrid';
 import TargetGrid from './TargetGrid';
@@ -36,7 +36,7 @@ let NUM_COLS = 5;
 
 const OnePlayerGame: React.FC = () => {
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [playerTiles, setPlayerTiles] = useState(shuffle(getGameTiles()))
     const [emptyPos, setEmptyPos] = useState(locateEmpty(playerTiles))
@@ -66,10 +66,15 @@ const OnePlayerGame: React.FC = () => {
         let innerColors = inner.map((value) => value.color);
         let targetColors = targetTiles.map((value) => value.color);
         if (arraysEqual(innerColors, targetColors)) {
+            
             console.log("You Won");
             setGameWon(true);
             setIsTimerRunning(false);
+
+            // ask for a username
+            // const playerName = prompt("YOU WON! Enter a name to show: ") || "Anonymous";
         }
+
         
     }
 
@@ -186,30 +191,31 @@ const OnePlayerGame: React.FC = () => {
         <>
             <div className={styles['game-wrapper']}>
                 <div className={styles['target-grid-container']}>
-                    <div className={styles['button-container']}>
-                        <button onClick={() => navigate('/')}>Home</button>
-                        <button onClick = {() => navigate('/leaderboard')}>Leaderboard</button>
-                        <button onClick = {resetGame}>Reset</button>
-                    </div>
+                    <div className={styles['tg-spacer-left']}></div>
                     <TargetGrid 
                     tiles={targetTiles}
-                    className={styles['game-target-grid']}
-                    /> 
-                    {
-                        gameWon ? (
-                            <div className={styles['win-container']}>
-                                we did it boys
-                            </div>
-                        ) : (
-                            <></>
-                        )
-                    }
+                    className={styles['target-grid']}
+                    />
+                    <div className={styles['tg-spacer-right']}>
+                        <button onClick={resetGame}>
+                            Reset
+                        </button>
+                        {
+                            gameWon ? (
+                                <div className={styles['win-container']}>
+                                    You Won!
+                                </div>
+                            ) : (
+                                <></>
+                            )
+                        }
+                    </div>
                 </div>
                 <div  {...swipeHandlers} className={styles['player-grid-container']}>
                     <PlayerGrid 
                     tiles={playerTiles} 
                     tileClickHandler={tileClickHandler}
-                    className={styles['game-player-grid']}
+                    className={styles['player-grid']}
                     />
                     <div className={styles['hud']}>
                         <Timer 
@@ -217,7 +223,7 @@ const OnePlayerGame: React.FC = () => {
                             time={time}
                             setTime={setTime}>
                         </Timer>
-                        <p>Moves: {moveCount}</p> 
+                        <span>Moves: {moveCount}</span> 
                     </div>
                 </div>
             </div>           

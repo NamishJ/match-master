@@ -140,3 +140,10 @@ export function getRandColor(): TileColor {
     let randColor = Math.floor(Math.random() * TILE_COLORS.length);
     return TILE_COLORS[randColor];
 }
+
+export type LeaderboardEntry = {
+    name: string; // will prompt user for this
+    moves: number;
+    time: number; // in seconds
+    date: string; // can use ISO, universal way to show date and time
+}
